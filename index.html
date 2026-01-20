@@ -3,8 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>뉴월드(New World) 게임 분석 보고서 (1차)</title>
+    <title>New World 경쟁작 분석 보고서</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #0a0e27;
+            --primary-light: #1a1f3a;
+            --accent: #6366f1;
+            --accent-light: #818cf8;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-tertiary: #94a3b8;
+            --border: #e2e8f0;
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,267 +30,406 @@
         }
 
         body {
-            font-family: 'Segoe UI', Malgun Gothic, sans-serif;
-            background: linear-gradient(to bottom, #faf8f5 0%, #f0ebe3 100%);
-            padding: 20px;
+            font-family: 'Inter', 'Noto Sans KR', -apple-system, sans-serif;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
             line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        .container {
-            max-width: 1200px;
+        .document {
+            max-width: 1440px;
             margin: 0 auto;
-            background: #ffffff;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-            border-radius: 20px;
+            background: var(--bg);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1629 100%);
+            padding: 80px 60px 100px;
+            position: relative;
             overflow: hidden;
         }
 
-        .header {
-            background: linear-gradient(135deg, #e8f4f8 0%, #d4e9f2 100%);
-            color: #2c5f7d;
-            padding: 50px 40px;
-            text-align: center;
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.5), transparent);
+        }
+
+        .header-content {
             position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        .report-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 100px;
+            color: var(--accent-light);
+            font-size: 0.813rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .report-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 15px;
-            font-weight: 700;
-            color: #1e4a5f;
+            color: white;
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
         }
 
-        .header .subtitle {
-            font-size: 1.1em;
-            color: #3d6b85;
-            margin-bottom: 8px;
+        .header-meta {
+            display: flex;
+            gap: 32px;
+            margin-top: 32px;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .meta-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .meta-value {
+            font-size: 0.938rem;
+            color: rgba(255, 255, 255, 0.9);
             font-weight: 500;
         }
 
-        .header .date {
-            font-size: 0.95em;
-            color: #5a8ca8;
-            font-weight: 400;
-        }
-
-        .meta-info {
-            background: #fdfbf7;
-            padding: 30px 40px;
-            border-bottom: 2px solid #e8dcc8;
-        }
-
-        .meta-info p {
-            margin: 10px 0;
-            color: #5a5a5a;
-            font-size: 1.02em;
-        }
-
-        .meta-info strong {
-            color: #2d2d2d;
+        .status-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 100px;
+            font-size: 0.75rem;
             font-weight: 600;
+            color: #fbbf24;
         }
 
-        .content {
-            padding: 50px 40px;
-            background: #fefefe;
+        .status-tag::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            background: #fbbf24;
+            border-radius: 50%;
         }
 
-        .section {
-            margin-bottom: 60px;
-            padding: 35px;
-            background: linear-gradient(to right, #fafafa 0%, #ffffff 100%);
-            border-radius: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        /* Main Content */
+        .main-content {
+            padding: 80px 60px;
         }
 
-        .section:nth-child(1) {
-            border-left: 5px solid #b8a2d4;
+        /* Analysis Section */
+        .analysis-section {
+            margin-bottom: 100px;
         }
 
-        .section:nth-child(2) {
-            border-left: 5px solid #89b5d9;
+        .analysis-section:last-child {
+            margin-bottom: 0;
         }
 
-        .section:nth-child(3) {
-            border-left: 5px solid #f5c99b;
+        .section-header {
+            margin-bottom: 48px;
         }
 
-        .section:nth-child(4) {
-            border-left: 5px solid #f4d77e;
-        }
-
-        .section:nth-child(5) {
-            border-left: 5px solid #a8d4ad;
-        }
-
-        .section-title {
-            font-size: 1.75em;
-            color: #333333;
-            margin-bottom: 30px;
-            font-weight: 700;
+        .section-meta {
             display: flex;
             align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
         }
 
         .section-number {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 18px;
-            font-size: 1.4em;
-            font-weight: 700;
-            color: #ffffff;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-        }
-
-        .section:nth-child(1) .section-number {
-            background: linear-gradient(135deg, #c8b3e0 0%, #b8a2d4 100%);
-        }
-
-        .section:nth-child(2) .section-number {
-            background: linear-gradient(135deg, #9dc9e8 0%, #89b5d9 100%);
-        }
-
-        .section:nth-child(3) .section-number {
-            background: linear-gradient(135deg, #ffd8ad 0%, #f5c99b 100%);
-        }
-
-        .section:nth-child(4) .section-number {
-            background: linear-gradient(135deg, #f9e492 0%, #f4d77e 100%);
-        }
-
-        .section:nth-child(5) .section-number {
-            background: linear-gradient(135deg, #b9e0bd 0%, #a8d4ad 100%);
-        }
-
-        .insights-container {
-            margin-bottom: 35px;
-        }
-
-        .insight-box {
-            background: #fafafa;
-            border-radius: 12px;
-            padding: 28px;
-            margin-bottom: 22px;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-
-        .insight-box.positive {
-            background: linear-gradient(to right, #e8f5ed 0%, #d4ede0 100%);
-            border-color: #7bc292;
-            border-width: 3px;
-        }
-
-        .insight-box.negative {
-            background: linear-gradient(to right, #fdeaea 0%, #fbd8d8 100%);
-            border-color: #f59393;
-            border-width: 3px;
-        }
-
-        .insight-title {
-            font-size: 1.3em;
-            font-weight: 700;
-            margin-bottom: 18px;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            color: white;
+            border-radius: 8px;
             display: flex;
             align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
         }
 
-        .insight-title.positive {
-            color: #2d7a3e;
+        .section-category {
+            font-size: 0.813rem;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .insight-title.negative {
-            color: #c14545;
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            line-height: 1.3;
         }
 
-        .insight-title::before {
-            margin-right: 12px;
-            font-size: 1.4em;
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-top: 8px;
+            font-weight: 400;
         }
 
-        .insight-title.positive::before {
-            content: "✓";
-            color: #5fb878;
-        }
-
-        .insight-title.negative::before {
-            content: "✗";
-            color: #e88888;
-        }
-
-        .insight-list {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .insight-list li {
-            padding: 12px 0;
-            padding-left: 28px;
-            position: relative;
-            color: #2d2d2d;
-            font-size: 1.08em;
-            line-height: 1.75;
-            font-weight: 500;
-        }
-
-        .insight-list li::before {
-            content: "◦";
-            position: absolute;
-            left: 8px;
-            color: #9d9d9d;
-            font-weight: bold;
-            font-size: 1.3em;
-        }
-
-        .screenshot-grid {
+        /* Screenshots */
+        .screenshots {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 30px;
+            gap: 24px;
+            margin-bottom: 56px;
         }
 
-        .screenshot-placeholder {
-            background: linear-gradient(135deg, #f5f5f5 0%, #ececec 100%);
-            border: 2px solid #d8d8d8;
-            border-radius: 12px;
-            padding: 0;
-            text-align: center;
-            color: #666666;
-            font-size: 1.05em;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            min-height: 220px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
+        .screenshot-item {
             position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-secondary);
             cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            aspect-ratio: 16/10;
+            border: 1px solid var(--border);
         }
 
-        .screenshot-placeholder img {
+        .screenshot-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+        }
+
+        .screenshot-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: transform 0.3s ease;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .screenshot-placeholder:hover {
-            border-color: #a8a8a8;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        .screenshot-item:hover {
+            box-shadow: var(--shadow-xl);
+            transform: translateY(-4px);
+            border-color: rgba(99, 102, 241, 0.2);
         }
 
-        .screenshot-placeholder:hover img {
+        .screenshot-item:hover::before {
+            opacity: 1;
+        }
+
+        .screenshot-item:hover img {
             transform: scale(1.05);
         }
 
-        /* 라이트박스 스타일 */
+        /* Findings */
+        .findings {
+            display: grid;
+            gap: 24px;
+        }
+
+        .finding-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .finding-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent) 0%, var(--accent-light) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .finding-card:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(99, 102, 241, 0.2);
+        }
+
+        .finding-card:hover::before {
+            opacity: 1;
+        }
+
+        .finding-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 28px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .finding-icon-wrapper {
+            position: relative;
+        }
+
+        .finding-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .finding-card.positive .finding-icon {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-color: #86efac;
+            color: #16a34a;
+        }
+
+        .finding-card.negative .finding-icon {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-color: #fca5a5;
+            color: #dc2626;
+        }
+
+        .finding-card:hover .finding-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .finding-title-wrapper {
+            flex: 1;
+        }
+
+        .finding-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-tertiary);
+            margin-bottom: 4px;
+        }
+
+        .finding-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .finding-count {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .finding-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            gap: 16px;
+        }
+
+        .finding-list li {
+            padding-left: 32px;
+            position: relative;
+            color: var(--text-primary);
+            font-size: 0.938rem;
+            line-height: 1.7;
+            font-weight: 400;
+            transition: all 0.2s ease;
+        }
+
+        .finding-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 20px;
+            height: 2px;
+            background: var(--accent);
+            transition: all 0.2s ease;
+        }
+
+        .finding-list li:hover {
+            color: var(--accent);
+            padding-left: 36px;
+        }
+
+        .finding-list li:hover::before {
+            width: 24px;
+        }
+
+        /* Lightbox */
         .lightbox {
             display: none;
             position: fixed;
@@ -281,9 +438,16 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
+            background: rgba(10, 14, 39, 0.95);
             align-items: center;
             justify-content: center;
+            backdrop-filter: blur(20px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .lightbox.active {
@@ -292,156 +456,243 @@
 
         .lightbox-content {
             max-width: 90%;
-            max-height: 90%;
+            max-height: 90vh;
             object-fit: contain;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .lightbox-close {
             position: absolute;
-            top: 30px;
-            right: 50px;
+            top: 32px;
+            right: 32px;
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
-            font-size: 40px;
-            font-weight: bold;
+            font-size: 20px;
             cursor: pointer;
-            transition: opacity 0.3s ease;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
 
         .lightbox-close:hover {
-            opacity: 0.7;
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
         }
 
-        .footer {
-            background: linear-gradient(to bottom, #f9f7f4 0%, #f3f0ea 100%);
-            padding: 35px 40px;
-            text-align: center;
-            color: #6a6a6a;
-            border-top: 2px solid #e8dcc8;
+        /* Decorative Elements */
+        .section-header::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
+            margin-top: 16px;
+            border-radius: 2px;
         }
 
-        .footer p {
-            margin: 8px 0;
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .screenshots {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .main-content {
+                padding: 60px 40px;
+            }
+
+            .header {
+                padding: 60px 40px 80px;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
         }
 
-        .status-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #ffe8a3 0%, #ffd978 100%);
-            color: #8b6914;
-            padding: 6px 18px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            font-weight: 600;
-            margin-left: 10px;
-            box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3);
+        @media (max-width: 768px) {
+            .screenshots {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .main-content {
+                padding: 40px 24px;
+            }
+
+            .header {
+                padding: 40px 24px 60px;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .finding-card {
+                padding: 28px;
+            }
+
+            .analysis-section {
+                margin-bottom: 60px;
+            }
         }
 
         @media print {
             body {
                 background: white;
-                padding: 0;
             }
-            .container {
-                box-shadow: none;
-            }
-        }
 
-        @media (max-width: 968px) {
-            .screenshot-grid {
-                grid-template-columns: 1fr;
+            .lightbox {
+                display: none !important;
             }
-        }
 
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8em;
-            }
-            .section-title {
-                font-size: 1.4em;
-            }
-            .content {
-                padding: 20px;
-            }
-            .section {
-                padding: 20px;
+            .screenshot-item {
+                break-inside: avoid;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="document">
+        <!-- Header -->
         <div class="header">
-            <h1>뉴월드(New World) 게임 분석 보고서</h1>
-            <p class="date">1차 보고 | 2026년 1월</p>
+            <div class="header-content">
+                <div class="report-badge">Competitive Analysis</div>
+                <h1>New World<br>경쟁작 분석</h1>
+                <div class="header-meta">
+                    <div class="meta-item">
+                        <div class="meta-label">목적</div>
+                        <div class="meta-value">뉴월드 플레이를 통한 인사이트 도출</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">분석 범위</div>
+                        <div class="meta-value">초반~중반 구간 (엔드 콘텐츠 미도달)</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">상태</div>
+                        <div class="status-tag">진행 중</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="meta-info">
-            <p><strong>보고 목적:</strong> 뉴월드(New World) 플레이를 통한 인사이트 도출</p>
-            <p><strong>분석 범위:</strong> 초반~중반 구간 (엔드 콘텐츠 미도달) <span class="status-badge">진행 중</span></p>
-        </div>
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Section 1 -->
+            <div class="analysis-section">
+                <div class="section-header">
+                    <div class="section-meta">
+                        <div class="section-number">1</div>
+                        <div class="section-category">Tutorial & Onboarding</div>
+                    </div>
+                    <h2 class="section-title">초반 진입 경험</h2>
+                </div>
 
-        <div class="content">
-            <!-- Section 1: 초반 구간 -->
-            <div class="section">
-                <h2 class="section-title">
-                    <span class="section-number">1</span>
-                    초반 진입 경험 (Tutorial & Onboarding)
-                </h2>
-
-                <div class="screenshot-grid">
-                    <div class="screenshot-placeholder" onclick="openLightbox('images/1.jpg')">
+                <div class="screenshots">
+                    <div class="screenshot-item" onclick="openLightbox('images/1.jpg')">
                         <img src="images/1.jpg" alt="캐릭터 생성 화면">
                     </div>
-                    <div class="screenshot-placeholder" onclick="openLightbox('images/2.jpg')">
+                    <div class="screenshot-item" onclick="openLightbox('images/2.jpg')">
                         <img src="images/2.jpg" alt="클래스 선택 UI">
                     </div>
-                    <div class="screenshot-placeholder" onclick="openLightbox('images/3.jpg')">
+                    <div class="screenshot-item" onclick="openLightbox('images/3.jpg')">
                         <img src="images/3.jpg" alt="튜토리얼 진행 화면">
                     </div>
                 </div>
 
-                <div class="insights-container">
-                    <div class="insight-box positive">
-                        <h3 class="insight-title positive">우리 게임에 적용하면 좋은 것</h3>
-                        <ul class="insight-list">
+                <div class="findings">
+                    <div class="finding-card positive">
+                        <div class="finding-header">
+                            <div class="finding-icon-wrapper">
+                                <div class="finding-icon">✓</div>
+                            </div>
+                            <div class="finding-title-wrapper">
+                                <div class="finding-label">Strengths</div>
+                                <h3 class="finding-title">긍정 요소</h3>
+                            </div>
+                            <div class="finding-count">3</div>
+                        </div>
+                        <ul class="finding-list">
                             <li>캐릭터 생성 화면에서 클래스를 명확하게 제시하고, 직관적인 클래스 아트 제공</li>
                             <li>기본적으로 2개 무기를 스왑하는 구조를 통해 전투 다양성 확보</li>
                             <li>게임 진입 후 초반 키 튜토리얼을 멈춘 화면에서 한 장면씩 진행하며 제공하여 학습 효율 극대화</li>
                         </ul>
                     </div>
 
-                    <div class="insight-box negative">
-                        <h3 class="insight-title negative">우리 게임에서 피해야 할 것</h3>
-                        <ul class="insight-list">
+                    <div class="finding-card negative">
+                        <div class="finding-header">
+                            <div class="finding-icon-wrapper">
+                                <div class="finding-icon">!</div>
+                            </div>
+                            <div class="finding-title-wrapper">
+                                <div class="finding-label">Weaknesses</div>
+                                <h3 class="finding-title">부정 요소</h3>
+                            </div>
+                            <div class="finding-count">1</div>
+                        </div>
+                        <ul class="finding-list">
                             <li>특이사항 없음 (초반 진입 경험은 전반적으로 우수)</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- Section 2: 전투 시스템 -->
-            <div class="section">
-                <h2 class="section-title">
-                    <span class="section-number">2</span>
-                    전투 시스템 (Combat Mechanics)
-                </h2>
+            <!-- Section 2 -->
+            <div class="analysis-section">
+                <div class="section-header">
+                    <div class="section-meta">
+                        <div class="section-number">2</div>
+                        <div class="section-category">Combat Mechanics</div>
+                    </div>
+                    <h2 class="section-title">전투 시스템</h2>
+                </div>
 
-                <div class="screenshot-grid">
-                    <div class="screenshot-placeholder" onclick="openLightbox('images/4.jpg')">
+                <div class="screenshots">
+                    <div class="screenshot-item" onclick="openLightbox('images/4.jpg')">
                         <img src="images/4.jpg" alt="전투 UI 및 스킬바">
                     </div>
-                    <div class="screenshot-placeholder" onclick="openLightbox('images/5.jpg')">
+                    <div class="screenshot-item" onclick="openLightbox('images/5.jpg')">
                         <img src="images/5.jpg" alt="보스 몬스터 전투">
                     </div>
-                    <div class="screenshot-placeholder" onclick="openLightbox('images/6.jpg')">
+                    <div class="screenshot-item" onclick="openLightbox('images/6.jpg')">
                         <img src="images/6.jpg" alt="무기 스왑 전투">
                     </div>
                 </div>
 
-                <div class="insights-container">
-                    <div class="insight-box positive">
-                        <h3 class="insight-title positive">우리 게임에 적용하면 좋은 것</h3>
-                        <ul class="insight-list">
+                <div class="findings">
+                    <div class="finding-card positive">
+                        <div class="finding-header">
+                            <div class="finding-icon-wrapper">
+                                <div class="finding-icon">✓</div>
+                            </div>
+                            <div class="finding-title-wrapper">
+                                <div class="finding-label">Strengths</div>
+                                <h3 class="finding-title">긍정 요소</h3>
+                            </div>
+                            <div class="finding-count">6</div>
+                        </div>
+                        <ul class="finding-list">
                             <li>기본공격 + 스킬 1234 형태로 직관적이고 쉬운 조작감 제공</li>
                             <li>보스 몬스터에 대한 명확한 시각적 구분 (디자인 & HP바)</li>
                             <li>'달리기'가 기본 적용되어 별도 스태미나 관리 부담 제거</li>
@@ -451,9 +702,18 @@
                         </ul>
                     </div>
 
-                    <div class="insight-box negative">
-                        <h3 class="insight-title negative">우리 게임에서 피해야 할 것</h3>
-                        <ul class="insight-list">
+                    <div class="finding-card negative">
+                        <div class="finding-header">
+                            <div class="finding-icon-wrapper">
+                                <div class="finding-icon">!</div>
+                            </div>
+                            <div class="finding-title-wrapper">
+                                <div class="finding-label">Weaknesses</div>
+                                <h3 class="finding-title">부정 요소</h3>
+                            </div>
+                            <div class="finding-count">2</div>
+                        </div>
+                        <ul class="finding-list">
                             <li>원거리 무기의 경우 지나치게 쉬운 조작감으로 인해 전투가 단조롭고 지루하게 느껴질 수 있음</li>
                             <li>난이도 조절 및 긴장감 유지를 위한 추가 메커니즘 필요</li>
                         </ul>
@@ -461,29 +721,41 @@
                 </div>
             </div>
 
-            <!-- Section 3: 진행 구조 -->
-            <div class="section">
-                <h2 class="section-title">
-                    <span class="section-number">3</span>
-                    진행 구조 (Quest & Progression)
-                </h2>
+            <!-- Section 3 -->
+            <div class="analysis-section">
+                <div class="section-header">
+                    <div class="section-meta">
+                        <div class="section-number">3</div>
+                        <div class="section-category">Quest & Progression</div>
+                    </div>
+                    <h2 class="section-title">진행 구조</h2>
+                </div>
 
-                <div class="screenshot-grid">
-                    <div class="screenshot-placeholder" onclick="openLightbox('images/7.jpg')">
+                <div class="screenshots">
+                    <div class="screenshot-item" onclick="openLightbox('images/7.jpg')">
                         <img src="images/7.jpg" alt="퀘스트 마커 시스템">
                     </div>
-                    <div class="screenshot-placeholder" onclick="openLightbox('images/8.jpg')">
+                    <div class="screenshot-item" onclick="openLightbox('images/8.jpg')">
                         <img src="images/8.jpg" alt="인게임 컷신">
                     </div>
-                    <div class="screenshot-placeholder" onclick="openLightbox('images/9.jpg')">
+                    <div class="screenshot-item" onclick="openLightbox('images/9.jpg')">
                         <img src="images/9.jpg" alt="제작 튜토리얼">
                     </div>
                 </div>
 
-                <div class="insights-container">
-                    <div class="insight-box positive">
-                        <h3 class="insight-title positive">우리 게임에 적용하면 좋은 것</h3>
-                        <ul class="insight-list">
+                <div class="findings">
+                    <div class="finding-card positive">
+                        <div class="finding-header">
+                            <div class="finding-icon-wrapper">
+                                <div class="finding-icon">✓</div>
+                            </div>
+                            <div class="finding-title-wrapper">
+                                <div class="finding-label">Strengths</div>
+                                <h3 class="finding-title">긍정 요소</h3>
+                            </div>
+                            <div class="finding-count">6</div>
+                        </div>
+                        <ul class="finding-list">
                             <li>퀘스트 목적지 위치를 맵에 명확하게 표기하여 방향성 제시</li>
                             <li>메인 퀘스트와 서브 퀘스트의 명확한 마커 구분으로 우선순위 판단 용이</li>
                             <li>제작 시스템 관련 초기 퀘스트를 통한 자연스러운 학습 유도</li>
@@ -493,38 +765,59 @@
                         </ul>
                     </div>
 
-                    <div class="insight-box negative">
-                        <h3 class="insight-title negative">우리 게임에서 피해야 할 것</h3>
-                        <ul class="insight-list">
+                    <div class="finding-card negative">
+                        <div class="finding-header">
+                            <div class="finding-icon-wrapper">
+                                <div class="finding-icon">!</div>
+                            </div>
+                            <div class="finding-title-wrapper">
+                                <div class="finding-label">Weaknesses</div>
+                                <h3 class="finding-title">부정 요소</h3>
+                            </div>
+                            <div class="finding-count">1</div>
+                        </div>
+                        <ul class="finding-list">
                             <li>특이사항 없음 (진행 가이드는 전반적으로 친절하고 명확함)</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- Section 4: 성장 요소 -->
-            <div class="section">
-                <h2 class="section-title">
-                    <span class="section-number">4</span>
-                    성장 요소 (Character Progression)
-                </h2>
+            <!-- Section 4 -->
+            <div class="analysis-section">
+                <div class="section-header">
+                    <div class="section-meta">
+                        <div class="section-number">4</div>
+                        <div class="section-category">Character Progression</div>
+                    </div>
+                    <h2 class="section-title">성장 요소</h2>
+                </div>
 
-                <div class="screenshot-grid">
-                    <div class="screenshot-placeholder" onclick="openLightbox('images/10.jpg')">
+                <div class="screenshots">
+                    <div class="screenshot-item" onclick="openLightbox('images/10.jpg')">
                         <img src="images/10.jpg" alt="능력치 분배 UI">
                     </div>
-                    <div class="screenshot-placeholder" onclick="openLightbox('images/11.jpg')">
+                    <div class="screenshot-item" onclick="openLightbox('images/11.jpg')">
                         <img src="images/11.jpg" alt="스킬 트리 시스템">
                     </div>
-                    <div class="screenshot-placeholder" onclick="openLightbox('images/12.jpg')">
+                    <div class="screenshot-item" onclick="openLightbox('images/12.jpg')">
                         <img src="images/12.jpg" alt="장비 착용 미리보기">
                     </div>
                 </div>
 
-                <div class="insights-container">
-                    <div class="insight-box positive">
-                        <h3 class="insight-title positive">우리 게임에 적용하면 좋은 것</h3>
-                        <ul class="insight-list">
+                <div class="findings">
+                    <div class="finding-card positive">
+                        <div class="finding-header">
+                            <div class="finding-icon-wrapper">
+                                <div class="finding-icon">✓</div>
+                            </div>
+                            <div class="finding-title-wrapper">
+                                <div class="finding-label">Strengths</div>
+                                <h3 class="finding-title">긍정 요소</h3>
+                            </div>
+                            <div class="finding-count">4</div>
+                        </div>
+                        <ul class="finding-list">
                             <li>레벨업마다 능력치를 직접 분배할 수 있어 커스터마이징 자유도 확보</li>
                             <li>클래스별 핵심 능력치가 존재하여 성장 방향성 가이드 제공</li>
                             <li>장비 교체 시 인벤토리에서 캐릭터 외형을 즉시 확인 가능하여 편의성 향상</li>
@@ -532,38 +825,59 @@
                         </ul>
                     </div>
 
-                    <div class="insight-box negative">
-                        <h3 class="insight-title negative">우리 게임에서 피해야 할 것</h3>
-                        <ul class="insight-list">
+                    <div class="finding-card negative">
+                        <div class="finding-header">
+                            <div class="finding-icon-wrapper">
+                                <div class="finding-icon">!</div>
+                            </div>
+                            <div class="finding-title-wrapper">
+                                <div class="finding-label">Weaknesses</div>
+                                <h3 class="finding-title">부정 요소</h3>
+                            </div>
+                            <div class="finding-count">1</div>
+                        </div>
+                        <ul class="finding-list">
                             <li>특이사항 없음 (성장 시스템은 적절한 깊이와 자유도 제공)</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- Section 5: 월드 디자인 -->
-            <div class="section">
-                <h2 class="section-title">
-                    <span class="section-number">5</span>
-                    월드 디자인 (World Design & UX)
-                </h2>
+            <!-- Section 5 -->
+            <div class="analysis-section">
+                <div class="section-header">
+                    <div class="section-meta">
+                        <div class="section-number">5</div>
+                        <div class="section-category">World Design & UX</div>
+                    </div>
+                    <h2 class="section-title">월드 디자인</h2>
+                </div>
 
-                <div class="screenshot-grid">
-                    <div class="screenshot-placeholder" onclick="openLightbox('images/13.jpg')">
+                <div class="screenshots">
+                    <div class="screenshot-item" onclick="openLightbox('images/13.jpg')">
                         <img src="images/13.jpg" alt="채집 오브젝트 표시">
                     </div>
-                    <div class="screenshot-placeholder" onclick="openLightbox('images/14.jpg')">
+                    <div class="screenshot-item" onclick="openLightbox('images/14.jpg')">
                         <img src="images/14.jpg" alt="월드 맵 UI">
                     </div>
-                    <div class="screenshot-placeholder" onclick="openLightbox('images/15.jpg')">
+                    <div class="screenshot-item" onclick="openLightbox('images/15.jpg')">
                         <img src="images/15.jpg" alt="빠른 이동 시스템">
                     </div>
                 </div>
 
-                <div class="insights-container">
-                    <div class="insight-box positive">
-                        <h3 class="insight-title positive">우리 게임에 적용하면 좋은 것</h3>
-                        <ul class="insight-list">
+                <div class="findings">
+                    <div class="finding-card positive">
+                        <div class="finding-header">
+                            <div class="finding-icon-wrapper">
+                                <div class="finding-icon">✓</div>
+                            </div>
+                            <div class="finding-title-wrapper">
+                                <div class="finding-label">Strengths</div>
+                                <h3 class="finding-title">긍정 요소</h3>
+                            </div>
+                            <div class="finding-count">4</div>
+                        </div>
+                        <ul class="finding-list">
                             <li>채집 가능한 오브젝트에 대한 명확한 표기 및 넓은 표시 범위로 높은 가시성 확보</li>
                             <li>상호작용 가능한 오브젝트에 대한 직관적인 UI 표시</li>
                             <li>지도에 표기되는 명확한 마커 시스템으로 정보 전달력 향상</li>
@@ -571,9 +885,18 @@
                         </ul>
                     </div>
 
-                    <div class="insight-box negative">
-                        <h3 class="insight-title negative">우리 게임에서 피해야 할 것</h3>
-                        <ul class="insight-list">
+                    <div class="finding-card negative">
+                        <div class="finding-header">
+                            <div class="finding-icon-wrapper">
+                                <div class="finding-icon">!</div>
+                            </div>
+                            <div class="finding-title-wrapper">
+                                <div class="finding-label">Weaknesses</div>
+                                <h3 class="finding-title">부정 요소</h3>
+                            </div>
+                            <div class="finding-count">3</div>
+                        </div>
+                        <ul class="finding-list">
                             <li>캐릭터 뷰 시점이 지나치게 멀리 설정되어 있어 전투의 액션감이 저하됨 (시점 조절 가능하나 WoW식 쿼터뷰로 호불호 존재)</li>
                             <li>초반부터 지도에 과도하게 많은 정보를 표기하여 정보 과부하 발생</li>
                             <li>단계적 정보 공개 또는 필터링 옵션 제공 필요</li>
@@ -581,14 +904,12 @@
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
 
-    <!-- 라이트박스 -->
+    <!-- Lightbox -->
     <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-        <span class="lightbox-close">&times;</span>
+        <div class="lightbox-close">×</div>
         <img class="lightbox-content" id="lightbox-img">
     </div>
 
@@ -598,18 +919,24 @@
             const lightboxImg = document.getElementById('lightbox-img');
             lightbox.classList.add('active');
             lightboxImg.src = imageSrc;
+            document.body.style.overflow = 'hidden';
         }
 
         function closeLightbox() {
             const lightbox = document.getElementById('lightbox');
             lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
         }
 
-        // ESC 키로 라이트박스 닫기
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 closeLightbox();
             }
+        });
+
+        document.querySelector('.lightbox-close').addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeLightbox();
         });
     </script>
 </body>
