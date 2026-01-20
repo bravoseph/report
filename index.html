@@ -36,20 +36,27 @@
             line-height: 1.7;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
         }
 
         .document {
             max-width: 1440px;
             margin: 0 auto;
             background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* Header */
         .header {
             background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1629 100%);
-            padding: 80px 60px 100px;
-            position: relative;
+            padding: 40px 60px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
             overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         .header::before {
@@ -76,7 +83,15 @@
         .header-content {
             position: relative;
             z-index: 1;
-            max-width: 900px;
+            max-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .header-left {
+            flex: 1;
         }
 
         .report-badge {
@@ -112,18 +127,15 @@
 
         .header h1 {
             color: white;
-            font-size: 3.5rem;
+            font-size: 2rem;
             font-weight: 800;
-            margin-bottom: 20px;
+            margin-bottom: 0;
             letter-spacing: -0.02em;
             line-height: 1.2;
         }
 
         .header-meta {
-            display: flex;
-            gap: 32px;
-            margin-top: 32px;
-            flex-wrap: wrap;
+            display: none;
         }
 
         .meta-item {
@@ -167,22 +179,101 @@
             border-radius: 50%;
         }
 
+        /* Pagination Navigation */
+        .pagination-nav {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .pagination-btn {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .pagination-dots {
+            display: flex;
+            gap: 8px;
+            padding: 0 12px;
+        }
+
+        .pagination-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pagination-dot.active {
+            background: var(--accent);
+            transform: scale(1.3);
+        }
+
+        .pagination-dot:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .page-counter {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.875rem;
+            font-weight: 600;
+            min-width: 60px;
+            text-align: center;
+        }
+
         /* Main Content */
         .main-content {
-            padding: 80px 60px;
+            padding: 40px 60px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .content-slider {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
         }
 
         /* Analysis Section */
         .analysis-section {
-            margin-bottom: 100px;
+            min-width: 100%;
+            max-width: 100%;
+            flex-shrink: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            box-sizing: border-box;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .analysis-section:last-child {
-            margin-bottom: 0;
+        .analysis-section.active {
+            opacity: 1;
         }
 
         .section-header {
-            margin-bottom: 48px;
+            margin-bottom: 24px;
+            padding: 0 20px;
         }
 
         .section-meta {
@@ -193,29 +284,29 @@
         }
 
         .section-number {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
             color: white;
-            border-radius: 8px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
+            font-size: 0.938rem;
             font-weight: 700;
             box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
         }
 
         .section-category {
-            font-size: 0.813rem;
+            font-size: 0.75rem;
             font-weight: 600;
             color: var(--text-tertiary);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         .section-title {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 800;
             color: var(--text-primary);
             letter-spacing: -0.02em;
@@ -224,8 +315,8 @@
 
         .section-subtitle {
             color: var(--text-secondary);
-            font-size: 1rem;
-            margin-top: 8px;
+            font-size: 0.938rem;
+            margin-top: 6px;
             font-weight: 400;
         }
 
@@ -233,19 +324,22 @@
         .screenshots {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-bottom: 56px;
+            gap: 20px;
+            margin-bottom: 32px;
+            width: 100%;
+            padding: 0 20px;
         }
 
         .screenshot-item {
             position: relative;
-            border-radius: 12px;
+            border-radius: 10px;
             overflow: hidden;
             background: var(--bg-secondary);
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            aspect-ratio: 16/10;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            aspect-ratio: 16/9;
             border: 1px solid var(--border);
+            max-height: 240px;
         }
 
         .screenshot-item::before {
@@ -280,17 +374,20 @@
             transform: scale(1.05);
         }
 
+
         /* Findings */
         .findings {
             display: grid;
-            gap: 24px;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 0 20px;
         }
 
         .finding-card {
             background: var(--bg);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 40px;
+            border-radius: 12px;
+            padding: 24px;
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
@@ -320,9 +417,9 @@
         .finding-header {
             display: flex;
             align-items: center;
-            gap: 16px;
-            margin-bottom: 28px;
-            padding-bottom: 20px;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
             border-bottom: 1px solid var(--border);
         }
 
@@ -331,13 +428,13 @@
         }
 
         .finding-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
+            font-size: 1rem;
             background: var(--bg-secondary);
             border: 1px solid var(--border);
             transition: all 0.3s ease;
@@ -364,29 +461,29 @@
         }
 
         .finding-label {
-            font-size: 0.75rem;
+            font-size: 0.688rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             color: var(--text-tertiary);
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .finding-title {
-            font-size: 1.25rem;
+            font-size: 1rem;
             font-weight: 700;
             color: var(--text-primary);
         }
 
         .finding-count {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
             background: var(--bg-secondary);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.875rem;
+            font-size: 0.813rem;
             font-weight: 700;
             color: var(--text-secondary);
             border: 1px solid var(--border);
@@ -396,37 +493,60 @@
             list-style: none;
             padding: 0;
             display: grid;
-            gap: 16px;
+            gap: 8px;
         }
 
         .finding-list li {
-            padding-left: 32px;
+            padding: 4px 12px 4px 28px;
+            margin: 0 -12px;
             position: relative;
             color: var(--text-primary);
-            font-size: 0.938rem;
-            line-height: 1.7;
+            font-size: 0.875rem;
+            line-height: 1.6;
             font-weight: 400;
-            transition: all 0.2s ease;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: default;
+            border-radius: 6px;
         }
 
         .finding-list li::before {
             content: '';
             position: absolute;
-            left: 0;
-            top: 10px;
-            width: 20px;
+            left: 12px;
+            top: 13px;
+            width: 16px;
             height: 2px;
             background: var(--accent);
-            transition: all 0.2s ease;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .finding-list li::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, rgba(99, 102, 241, 0.03) 0%, transparent 100%);
+            border-radius: 6px;
+            opacity: 0;
+            transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
         }
 
         .finding-list li:hover {
             color: var(--accent);
-            padding-left: 36px;
+            font-weight: 500;
+            transform: translateX(2px);
         }
 
         .finding-list li:hover::before {
-            width: 24px;
+            width: 20px;
+            background: var(--accent);
+        }
+
+        .finding-list li:hover::after {
+            opacity: 1;
         }
 
         /* Lightbox */
@@ -513,48 +633,118 @@
         @media (max-width: 1024px) {
             .screenshots {
                 grid-template-columns: repeat(2, 1fr);
+                padding: 0 15px;
+            }
+
+            .screenshot-item {
+                max-height: 200px;
+            }
+
+            .findings {
+                grid-template-columns: 1fr;
+                padding: 0 15px;
+            }
+
+            .section-header {
+                padding: 0 15px;
             }
 
             .main-content {
-                padding: 60px 40px;
+                padding: 30px 40px;
             }
 
             .header {
-                padding: 60px 40px 80px;
+                padding: 30px 40px;
             }
 
             .header h1 {
-                font-size: 2.5rem;
+                font-size: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.25rem;
+            }
+
+            .pagination-nav {
+                gap: 6px;
+            }
+
+            .pagination-btn {
+                padding: 8px 16px;
+                font-size: 0.813rem;
+            }
+
+            .page-counter {
+                font-size: 0.813rem;
+                min-width: 50px;
             }
         }
 
         @media (max-width: 768px) {
             .screenshots {
                 grid-template-columns: 1fr;
+                padding: 0 10px;
+            }
+
+            .screenshot-item {
+                max-height: 220px;
+            }
+
+            .findings {
+                grid-template-columns: 1fr;
+                padding: 0 10px;
+            }
+
+            .section-header {
+                padding: 0 10px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
             }
 
             .header h1 {
-                font-size: 2rem;
+                font-size: 1.25rem;
             }
 
             .main-content {
-                padding: 40px 24px;
+                padding: 24px;
             }
 
             .header {
-                padding: 40px 24px 60px;
+                padding: 24px;
             }
 
             .section-title {
-                font-size: 1.5rem;
+                font-size: 1.125rem;
             }
 
             .finding-card {
-                padding: 28px;
+                padding: 20px;
             }
 
-            .analysis-section {
-                margin-bottom: 60px;
+            .pagination-nav {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .pagination-dots {
+                order: -1;
+                width: 100%;
+                justify-content: center;
+                padding: 0 0 12px 0;
+            }
+
+            .pagination-btn {
+                padding: 8px 12px;
+                font-size: 0.75rem;
+            }
+
+            .report-badge {
+                font-size: 0.75rem;
+                padding: 6px 12px;
             }
         }
 
@@ -578,29 +768,24 @@
         <!-- Header -->
         <div class="header">
             <div class="header-content">
-                <div class="report-badge">Competitive Analysis</div>
-                <h1>New World<br>경쟁작 분석</h1>
-                <div class="header-meta">
-                    <div class="meta-item">
-                        <div class="meta-label">목적</div>
-                        <div class="meta-value">뉴월드 플레이를 통한 인사이트 도출</div>
-                    </div>
-                    <div class="meta-item">
-                        <div class="meta-label">분석 범위</div>
-                        <div class="meta-value">초반~중반 구간 (엔드 콘텐츠 미도달)</div>
-                    </div>
-                    <div class="meta-item">
-                        <div class="meta-label">상태</div>
-                        <div class="status-tag">진행 중</div>
-                    </div>
+                <div class="header-left">
+                    <div class="report-badge">Competitive Analysis</div>
+                    <h1>New World 플레이 공유</h1>
+                </div>
+                <div class="pagination-nav">
+                    <button class="pagination-btn" id="prev-btn" onclick="prevPage()">← 이전</button>
+                    <div class="pagination-dots" id="pagination-dots"></div>
+                    <span class="page-counter"><span id="current-page">1</span> / <span id="total-pages">5</span></span>
+                    <button class="pagination-btn" id="next-btn" onclick="nextPage()">다음 →</button>
                 </div>
             </div>
         </div>
 
         <!-- Main Content -->
         <div class="main-content">
+            <div class="content-slider" id="content-slider">
             <!-- Section 1 -->
-            <div class="analysis-section">
+            <div class="analysis-section active">
                 <div class="section-header">
                     <div class="section-meta">
                         <div class="section-number">1</div>
@@ -610,13 +795,13 @@
                 </div>
 
                 <div class="screenshots">
-                    <div class="screenshot-item" onclick="openLightbox('images/1.jpg')">
+                    <div class="screenshot-item" data-img="img-1" onclick="openLightbox('images/1.jpg')">
                         <img src="images/1.jpg" alt="캐릭터 생성 화면">
                     </div>
-                    <div class="screenshot-item" onclick="openLightbox('images/2.jpg')">
+                    <div class="screenshot-item" data-img="img-2" onclick="openLightbox('images/2.jpg')">
                         <img src="images/2.jpg" alt="클래스 선택 UI">
                     </div>
-                    <div class="screenshot-item" onclick="openLightbox('images/3.jpg')">
+                    <div class="screenshot-item" data-img="img-3" onclick="openLightbox('images/3.jpg')">
                         <img src="images/3.jpg" alt="튜토리얼 진행 화면">
                     </div>
                 </div>
@@ -634,9 +819,9 @@
                             <div class="finding-count">3</div>
                         </div>
                         <ul class="finding-list">
-                            <li>캐릭터 생성 화면에서 클래스를 명확하게 제시하고, 직관적인 클래스 아트 제공</li>
-                            <li>기본적으로 2개 무기를 스왑하는 구조를 통해 전투 다양성 확보</li>
-                            <li>게임 진입 후 초반 키 튜토리얼을 멈춘 화면에서 한 장면씩 진행하며 제공하여 학습 효율 극대화</li>
+                            <li data-screenshot="img-1">캐릭터 생성 화면에서 클래스를 명확하게 제시하고, 직관적인 클래스 아트 제공</li>
+                            <li data-screenshot="img-2">기본적으로 2개 무기를 스왑하는 구조를 통해 전투 다양성 확보</li>
+                            <li data-screenshot="img-3">게임 진입 후 초반 키 튜토리얼을 멈춘 화면에서 한 장면씩 진행하며 제공하여 학습 효율 극대화</li>
                         </ul>
                     </div>
 
@@ -669,13 +854,13 @@
                 </div>
 
                 <div class="screenshots">
-                    <div class="screenshot-item" onclick="openLightbox('images/4.jpg')">
+                    <div class="screenshot-item" data-img="img-4" onclick="openLightbox('images/4.jpg')">
                         <img src="images/4.jpg" alt="전투 UI 및 스킬바">
                     </div>
-                    <div class="screenshot-item" onclick="openLightbox('images/5.jpg')">
+                    <div class="screenshot-item" data-img="img-5" onclick="openLightbox('images/5.jpg')">
                         <img src="images/5.jpg" alt="보스 몬스터 전투">
                     </div>
-                    <div class="screenshot-item" onclick="openLightbox('images/6.jpg')">
+                    <div class="screenshot-item" data-img="img-6" onclick="openLightbox('images/6.jpg')">
                         <img src="images/6.jpg" alt="무기 스왑 전투">
                     </div>
                 </div>
@@ -693,12 +878,12 @@
                             <div class="finding-count">6</div>
                         </div>
                         <ul class="finding-list">
-                            <li>기본공격 + 스킬 1234 형태로 직관적이고 쉬운 조작감 제공</li>
-                            <li>보스 몬스터에 대한 명확한 시각적 구분 (디자인 & HP바)</li>
-                            <li>'달리기'가 기본 적용되어 별도 스태미나 관리 부담 제거</li>
-                            <li>지역마다 배치된 환경 오브젝트를 활용한 전략적 전투 가능</li>
-                            <li>근접 무기 공격 시 몬스터의 피격 경직으로 근접 전투 난이도 조절</li>
-                            <li>근접/원거리 무기 교대 장비를 통한 상황별 대처 전략 구현</li>
+                            <li data-screenshot="img-4">기본공격 + 스킬 1234 형태로 직관적이고 쉬운 조작감 제공</li>
+                            <li data-screenshot="img-5">보스 몬스터에 대한 명확한 시각적 구분 (디자인 & HP바)</li>
+                            <li data-screenshot="img-4">'달리기'가 기본 적용되어 별도 스태미나 관리 부담 제거</li>
+                            <li data-screenshot="img-5">지역마다 배치된 환경 오브젝트를 활용한 전략적 전투 가능</li>
+                            <li data-screenshot="img-6">근접 무기 공격 시 몬스터의 피격 경직으로 근접 전투 난이도 조절</li>
+                            <li data-screenshot="img-6">근접/원거리 무기 교대 장비를 통한 상황별 대처 전략 구현</li>
                         </ul>
                     </div>
 
@@ -714,8 +899,8 @@
                             <div class="finding-count">2</div>
                         </div>
                         <ul class="finding-list">
-                            <li>원거리 무기의 경우 지나치게 쉬운 조작감으로 인해 전투가 단조롭고 지루하게 느껴질 수 있음</li>
-                            <li>난이도 조절 및 긴장감 유지를 위한 추가 메커니즘 필요</li>
+                            <li data-screenshot="img-6">원거리 무기의 경우 지나치게 쉬운 조작감으로 인해 전투가 단조롭고 지루하게 느껴질 수 있음</li>
+                            <li data-screenshot="img-4">난이도 조절 및 긴장감 유지를 위한 추가 메커니즘 필요</li>
                         </ul>
                     </div>
                 </div>
@@ -732,13 +917,13 @@
                 </div>
 
                 <div class="screenshots">
-                    <div class="screenshot-item" onclick="openLightbox('images/7.jpg')">
+                    <div class="screenshot-item" data-img="img-7" onclick="openLightbox('images/7.jpg')">
                         <img src="images/7.jpg" alt="퀘스트 마커 시스템">
                     </div>
-                    <div class="screenshot-item" onclick="openLightbox('images/8.jpg')">
+                    <div class="screenshot-item" data-img="img-8" onclick="openLightbox('images/8.jpg')">
                         <img src="images/8.jpg" alt="인게임 컷신">
                     </div>
-                    <div class="screenshot-item" onclick="openLightbox('images/9.jpg')">
+                    <div class="screenshot-item" data-img="img-9" onclick="openLightbox('images/9.jpg')">
                         <img src="images/9.jpg" alt="제작 튜토리얼">
                     </div>
                 </div>
@@ -756,12 +941,12 @@
                             <div class="finding-count">6</div>
                         </div>
                         <ul class="finding-list">
-                            <li>퀘스트 목적지 위치를 맵에 명확하게 표기하여 방향성 제시</li>
-                            <li>메인 퀘스트와 서브 퀘스트의 명확한 마커 구분으로 우선순위 판단 용이</li>
-                            <li>제작 시스템 관련 초기 퀘스트를 통한 자연스러운 학습 유도</li>
-                            <li>도축 가능한 사체, 획득 가능한 퀘스트 아이템에 대한 명확한 시각적 표시</li>
-                            <li>각 지역 도착 시 할 일을 상세히 안내하여 플레이어 혼란 최소화</li>
-                            <li>메인 퀘스트마다 인게임 컷신 제공으로 스토리 몰입감 향상</li>
+                            <li data-screenshot="img-7">퀘스트 목적지 위치를 맵에 명확하게 표기하여 방향성 제시</li>
+                            <li data-screenshot="img-7">메인 퀘스트와 서브 퀘스트의 명확한 마커 구분으로 우선순위 판단 용이</li>
+                            <li data-screenshot="img-9">제작 시스템 관련 초기 퀘스트를 통한 자연스러운 학습 유도</li>
+                            <li data-screenshot="img-7">도축 가능한 사체, 획득 가능한 퀘스트 아이템에 대한 명확한 시각적 표시</li>
+                            <li data-screenshot="img-9">각 지역 도착 시 할 일을 상세히 안내하여 플레이어 혼란 최소화</li>
+                            <li data-screenshot="img-8">메인 퀘스트마다 인게임 컷신 제공으로 스토리 몰입감 향상</li>
                         </ul>
                     </div>
 
@@ -794,13 +979,13 @@
                 </div>
 
                 <div class="screenshots">
-                    <div class="screenshot-item" onclick="openLightbox('images/10.jpg')">
+                    <div class="screenshot-item" data-img="img-10" onclick="openLightbox('images/10.jpg')">
                         <img src="images/10.jpg" alt="능력치 분배 UI">
                     </div>
-                    <div class="screenshot-item" onclick="openLightbox('images/11.jpg')">
+                    <div class="screenshot-item" data-img="img-11" onclick="openLightbox('images/11.jpg')">
                         <img src="images/11.jpg" alt="스킬 트리 시스템">
                     </div>
-                    <div class="screenshot-item" onclick="openLightbox('images/12.jpg')">
+                    <div class="screenshot-item" data-img="img-12" onclick="openLightbox('images/12.jpg')">
                         <img src="images/12.jpg" alt="장비 착용 미리보기">
                     </div>
                 </div>
@@ -818,10 +1003,10 @@
                             <div class="finding-count">4</div>
                         </div>
                         <ul class="finding-list">
-                            <li>레벨업마다 능력치를 직접 분배할 수 있어 커스터마이징 자유도 확보</li>
-                            <li>클래스별 핵심 능력치가 존재하여 성장 방향성 가이드 제공</li>
-                            <li>장비 교체 시 인벤토리에서 캐릭터 외형을 즉시 확인 가능하여 편의성 향상</li>
-                            <li>같은 무기라도 2가지 스킬 트리 중 선택하여 빌드 다양성 제공</li>
+                            <li data-screenshot="img-10">레벨업마다 능력치를 직접 분배할 수 있어 커스터마이징 자유도 확보</li>
+                            <li data-screenshot="img-10">클래스별 핵심 능력치가 존재하여 성장 방향성 가이드 제공</li>
+                            <li data-screenshot="img-12">장비 교체 시 인벤토리에서 캐릭터 외형을 즉시 확인 가능하여 편의성 향상</li>
+                            <li data-screenshot="img-11">같은 무기라도 2가지 스킬 트리 중 선택하여 빌드 다양성 제공</li>
                         </ul>
                     </div>
 
@@ -854,13 +1039,13 @@
                 </div>
 
                 <div class="screenshots">
-                    <div class="screenshot-item" onclick="openLightbox('images/13.jpg')">
+                    <div class="screenshot-item" data-img="img-13" onclick="openLightbox('images/13.jpg')">
                         <img src="images/13.jpg" alt="채집 오브젝트 표시">
                     </div>
-                    <div class="screenshot-item" onclick="openLightbox('images/14.jpg')">
+                    <div class="screenshot-item" data-img="img-14" onclick="openLightbox('images/14.jpg')">
                         <img src="images/14.jpg" alt="월드 맵 UI">
                     </div>
-                    <div class="screenshot-item" onclick="openLightbox('images/15.jpg')">
+                    <div class="screenshot-item" data-img="img-15" onclick="openLightbox('images/15.jpg')">
                         <img src="images/15.jpg" alt="빠른 이동 시스템">
                     </div>
                 </div>
@@ -875,13 +1060,12 @@
                                 <div class="finding-label">Strengths</div>
                                 <h3 class="finding-title">긍정 요소</h3>
                             </div>
-                            <div class="finding-count">4</div>
+                            <div class="finding-count">3</div>
                         </div>
                         <ul class="finding-list">
-                            <li>채집 가능한 오브젝트에 대한 명확한 표기 및 넓은 표시 범위로 높은 가시성 확보</li>
-                            <li>상호작용 가능한 오브젝트에 대한 직관적인 UI 표시</li>
-                            <li>지도에 표기되는 명확한 마커 시스템으로 정보 전달력 향상</li>
-                            <li>지역 간 빠른 이동(텔레포트)을 어디서든 지도를 통해 즉시 실행 가능</li>
+                            <li data-screenshot="img-13">채집 가능한 오브젝트에 대한 명확한 표기 및 넓은 표시 범위로 높은 가시성 확보</li>
+                            <li data-screenshot="img-14">지도에 표기되는 명확한 마커 시스템으로 정보 전달력 향상</li>
+                            <li data-screenshot="img-15">지역 간 빠른 이동(텔레포트)을 어디서든 지도를 통해 즉시 실행 가능</li>
                         </ul>
                     </div>
 
@@ -897,12 +1081,13 @@
                             <div class="finding-count">3</div>
                         </div>
                         <ul class="finding-list">
-                            <li>캐릭터 뷰 시점이 지나치게 멀리 설정되어 있어 전투의 액션감이 저하됨 (시점 조절 가능하나 WoW식 쿼터뷰로 호불호 존재)</li>
-                            <li>초반부터 지도에 과도하게 많은 정보를 표기하여 정보 과부하 발생</li>
-                            <li>단계적 정보 공개 또는 필터링 옵션 제공 필요</li>
+                            <li data-screenshot="img-13">캐릭터 뷰 시점이 지나치게 멀리 설정되어 있어 전투의 액션감이 저하됨 (시점 조절 가능하나 WoW식 쿼터뷰로 호불호 존재)</li>
+                            <li data-screenshot="img-14">초반부터 지도에 과도하게 많은 정보를 표기하여 정보 과부하 발생</li>
+                            <li data-screenshot="img-14">단계적 정보 공개 또는 필터링 옵션 제공 필요</li>
                         </ul>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     </div>
@@ -914,6 +1099,91 @@
     </div>
 
     <script>
+        // Pagination Logic
+        let currentPage = 0;
+        const totalPages = 5;
+        const sections = document.querySelectorAll('.analysis-section');
+        const contentSlider = document.getElementById('content-slider');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const currentPageSpan = document.getElementById('current-page');
+        const paginationDots = document.getElementById('pagination-dots');
+
+        // Initialize pagination dots
+        for (let i = 0; i < totalPages; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'pagination-dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => goToPage(i);
+            paginationDots.appendChild(dot);
+        }
+
+        function updatePagination() {
+            // Get the width of one section
+            const sectionWidth = sections[0].offsetWidth;
+
+            // Update slider position
+            contentSlider.style.transform = `translateX(-${currentPage * sectionWidth}px)`;
+
+            // Update active section
+            sections.forEach((section, index) => {
+                if (index === currentPage) {
+                    setTimeout(() => section.classList.add('active'), 100);
+                } else {
+                    section.classList.remove('active');
+                }
+            });
+
+            // Update buttons
+            prevBtn.disabled = currentPage === 0;
+            nextBtn.disabled = currentPage === totalPages - 1;
+
+            // Update page counter
+            currentPageSpan.textContent = currentPage + 1;
+
+            // Update dots
+            document.querySelectorAll('.pagination-dot').forEach((dot, index) => {
+                if (index === currentPage) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages - 1) {
+                currentPage++;
+                updatePagination();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 0) {
+                currentPage--;
+                updatePagination();
+            }
+        }
+
+        function goToPage(pageIndex) {
+            currentPage = pageIndex;
+            updatePagination();
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight') {
+                nextPage();
+            } else if (event.key === 'ArrowLeft') {
+                prevPage();
+            } else if (event.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+
+        // Lightbox
         function openLightbox(imageSrc) {
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
@@ -928,16 +1198,18 @@
             document.body.style.overflow = 'auto';
         }
 
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeLightbox();
-            }
-        });
-
         document.querySelector('.lightbox-close').addEventListener('click', function(e) {
             e.stopPropagation();
             closeLightbox();
         });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            updatePagination();
+        });
+
+        // Initialize
+        updatePagination();
     </script>
 </body>
 </html>
