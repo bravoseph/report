@@ -775,7 +775,7 @@
                 <div class="pagination-nav">
                     <button class="pagination-btn" id="prev-btn" onclick="prevPage()">← 이전</button>
                     <div class="pagination-dots" id="pagination-dots"></div>
-                    <span class="page-counter"><span id="current-page">1</span> / <span id="total-pages">5</span></span>
+                    <span class="page-counter"><span id="current-page">1</span> / <span id="total-pages">6</span></span>
                     <button class="pagination-btn" id="next-btn" onclick="nextPage()">다음 →</button>
                 </div>
             </div>
@@ -1081,10 +1081,208 @@
                             <div class="finding-count">3</div>
                         </div>
                         <ul class="finding-list">
-                            <li data-screenshot="img-13">캐릭터 뷰 시점이 지나치게 멀리 설정되어 있어 전투의 액션감이 저하됨 (시점 조절 가능하나 WoW식 쿼터뷰로 호불호 존재)</li>
+                            <li data-screenshot="img-13">캐릭터 뷰 시점이 지나치게 멀리 설정되어 있어 전투의 액션감이 저하됨<br>(시점 조절 가능하나 WoW식 쿼터뷰로 호불호 존재)</li>
                             <li data-screenshot="img-14">초반부터 지도에 과도하게 많은 정보를 표기하여 정보 과부하 발생</li>
                             <li data-screenshot="img-14">단계적 정보 공개 또는 필터링 옵션 제공 필요</li>
                         </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Section 6: Coming Next -->
+            <div class="analysis-section">
+                <div class="section-header">
+                    <div class="section-meta">
+                        <div class="section-number">6</div>
+                        <div class="section-category">Coming Next</div>
+                    </div>
+                    <h2 class="section-title">이후 공유 예정 내용</h2>
+                    <p class="section-subtitle">추가로 정리하여 공유드릴 분석 항목입니다</p>
+                </div>
+
+                <div class="u-flow" style="padding: 0 20px;">
+                    <style>
+                        .u-flow-row {
+                            display: flex;
+                            align-items: center;
+                            gap: 0;
+                            position: relative;
+                        }
+                        .u-flow-node {
+                            flex: 1;
+                            padding: 20px 16px;
+                            background: var(--bg);
+                            border: 2px solid var(--border);
+                            border-radius: 12px;
+                            text-align: center;
+                            position: relative;
+                            z-index: 2;
+                            transition: all 0.3s ease;
+                        }
+                        .u-flow-node:hover {
+                            box-shadow: var(--shadow-lg);
+                            border-color: rgba(99, 102, 241, 0.4);
+                            transform: translateY(-2px);
+                        }
+                        .u-flow-node .node-num {
+                            width: 32px;
+                            height: 32px;
+                            border-radius: 50%;
+                            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+                            color: white;
+                            font-size: 0.875rem;
+                            font-weight: 700;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            margin: 0 auto 10px;
+                            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+                        }
+                        .u-flow-node .node-title {
+                            font-size: 0.938rem;
+                            font-weight: 700;
+                            color: var(--text-primary);
+                        }
+                        /* Rail track connector */
+                        .u-flow-track {
+                            width: 48px;
+                            height: 6px;
+                            flex-shrink: 0;
+                            position: relative;
+                            z-index: 1;
+                        }
+                        .u-flow-track::before {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            right: 0;
+                            height: 2px;
+                            background: var(--accent);
+                            border-radius: 1px;
+                        }
+                        .u-flow-track::after {
+                            content: '';
+                            position: absolute;
+                            bottom: 0;
+                            left: 0;
+                            right: 0;
+                            height: 2px;
+                            background: var(--accent);
+                            border-radius: 1px;
+                        }
+                        .u-flow-track .track-ties {
+                            position: absolute;
+                            top: -1px;
+                            left: 4px;
+                            right: 4px;
+                            bottom: -1px;
+                            display: flex;
+                            justify-content: space-evenly;
+                        }
+                        .u-flow-track .track-ties span {
+                            width: 2px;
+                            height: 100%;
+                            background: var(--accent);
+                            opacity: 0.5;
+                            border-radius: 1px;
+                        }
+                        /* Vertical turn rail */
+                        .u-flow-turn {
+                            display: flex;
+                            justify-content: flex-end;
+                            padding: 0;
+                            height: 56px;
+                            position: relative;
+                        }
+                        .u-flow-turn-rail {
+                            width: 6px;
+                            height: 100%;
+                            position: relative;
+                            margin-right: calc(16.66% - 3px); /* center of last node */
+                        }
+                        .u-flow-turn-rail::before {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 2px;
+                            height: 100%;
+                            background: var(--accent);
+                            border-radius: 1px;
+                        }
+                        .u-flow-turn-rail::after {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            width: 2px;
+                            height: 100%;
+                            background: var(--accent);
+                            border-radius: 1px;
+                        }
+                        .u-flow-turn-rail .track-ties-v {
+                            position: absolute;
+                            top: 4px;
+                            bottom: 4px;
+                            left: -1px;
+                            right: -1px;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: space-evenly;
+                        }
+                        .u-flow-turn-rail .track-ties-v span {
+                            height: 2px;
+                            width: 100%;
+                            background: var(--accent);
+                            opacity: 0.5;
+                            border-radius: 1px;
+                        }
+                        .u-flow-row.reverse {
+                            flex-direction: row-reverse;
+                        }
+                    </style>
+
+                    <!-- Row 1: 1 → 2 → 3 -->
+                    <div class="u-flow-row">
+                        <div class="u-flow-node">
+                            <div class="node-num">1</div>
+                            <div class="node-title">레벨링 전체 흐름</div>
+                        </div>
+                        <div class="u-flow-track"><div class="track-ties"><span></span><span></span><span></span><span></span><span></span></div></div>
+                        <div class="u-flow-node">
+                            <div class="node-num">2</div>
+                            <div class="node-title">성장 동기 - 변화</div>
+                        </div>
+                        <div class="u-flow-track"><div class="track-ties"><span></span><span></span><span></span><span></span><span></span></div></div>
+                        <div class="u-flow-node">
+                            <div class="node-num">3</div>
+                            <div class="node-title">엔드콘텐츠 구조</div>
+                        </div>
+                    </div>
+
+                    <!-- Turn: right side down rail -->
+                    <div class="u-flow-turn">
+                        <div class="u-flow-turn-rail">
+                            <div class="track-ties-v"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: 6 ← 5 ← 4 -->
+                    <div class="u-flow-row reverse">
+                        <div class="u-flow-node">
+                            <div class="node-num">4</div>
+                            <div class="node-title">메타/빌드 (무기)</div>
+                        </div>
+                        <div class="u-flow-track"><div class="track-ties"><span></span><span></span><span></span><span></span><span></span></div></div>
+                        <div class="u-flow-node">
+                            <div class="node-num">5</div>
+                            <div class="node-title">이탈 포인트</div>
+                        </div>
+                        <div class="u-flow-track"><div class="track-ties"><span></span><span></span><span></span><span></span><span></span></div></div>
+                        <div class="u-flow-node">
+                            <div class="node-num">6</div>
+                            <div class="node-title">최종 총평</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1101,7 +1299,7 @@
     <script>
         // Pagination Logic
         let currentPage = 0;
-        const totalPages = 5;
+        const totalPages = 6;
         const sections = document.querySelectorAll('.analysis-section');
         const contentSlider = document.getElementById('content-slider');
         const prevBtn = document.getElementById('prev-btn');
